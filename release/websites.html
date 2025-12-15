@@ -25,16 +25,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                      <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="services.html">Services</a>
-                    </li>
-                    <li class="nav-item">
                       <a class="nav-link active" href="websites.html">Websites</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="https://x-traordinary.ai/">AI</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="services.html">Services</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="contact.html">Contact Us</a>
@@ -56,6 +56,9 @@
           <source src="images/xavierthurman.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
+
+        <!-- Desktop-only dark overlay over hero video (keeps nav clickable) -->
+        <div class="inner-page-hero-overlay"></div>
       </div>
     </header>
 
@@ -133,7 +136,10 @@
           </div>
           <div class="col-lg-6 col-md-6">
             <div class="promo-media-wrapper">
-              <img src="images/services/placeholder.png" alt="Website layout preview">
+              <video autoplay muted loop playsinline>
+                <source src="images/Abstract_Tech_Video_Generation.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </div>

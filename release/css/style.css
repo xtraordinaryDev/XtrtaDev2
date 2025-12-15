@@ -185,6 +185,7 @@ a {
   width: 100%;
   top: 0;
   left: 0;
+  z-index: 3;
 }
 
 /* =========================
@@ -192,6 +193,7 @@ a {
    ========================= */
 
 .home-hero-video {
+  position: relative;
   overflow: hidden;
 }
 
@@ -203,8 +205,57 @@ a {
   margin-left: -4%;
 }
 
+.home-hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* keep navigation and future CTAs clickable */
+}
+
+.home-hero-copy {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.hero-kicker {
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 12px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+.home-hero-copy h1 {
+  color: var(--white);
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
+}
+.inner-page-hero {
+  position: relative;
+  overflow: hidden;
+}
+
 .inner-page-hero img {
   width: 100%;
+}
+
+.inner-page-hero video {
+  width: 100%;
+  height: 70dvh;
+  object-fit: cover;
+  display: block;
+}
+
+.inner-page-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: none; /* keep nav and video interactions clickable */
 }
 
 /* =========================
@@ -476,6 +527,14 @@ a {
   flex-direction: column;
 }
 
+.client-logo-track img {
+  height: 100px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
 .client-logo-column--up .client-logo-track {
   animation: client-logo-scroll-up 20s linear infinite;
 }
@@ -504,6 +563,12 @@ a {
 
 .promo-media-wrapper {
   margin-top: 20px;
+}
+
+.promo-media-wrapper video {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .content-align-right {
@@ -735,6 +800,18 @@ a {
     max-width: 720px;
   }
 
+  .home-hero-video video {
+    height: 480px;
+  }
+
+  .home-hero-copy h1 {
+    font-size: var(--h2);
+  }
+
+  .hero-kicker {
+    font-size: 12px;
+  }
+
   .navbar-toggler {
     background-color: var(--yellow);
   }
@@ -833,6 +910,16 @@ a {
   .inner-page-hero img {
     height: 250px;
     object-fit: cover;
+  }
+
+  .inner-page-hero video {
+    height: 250px;
+    object-fit: cover;
+  }
+
+  /* hide desktop hero overlay on mobile */
+  .inner-page-hero-overlay {
+    display: none;
   }
 
   .home-hero-video video {

@@ -219,6 +219,9 @@ a {
   max-width: 720px;
   margin: 0 auto;
   padding: 0 16px;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: hero-fade-up 0.9s ease-out forwards;
 }
 
 .hero-kicker {
@@ -258,6 +261,17 @@ a {
   pointer-events: none; /* keep nav and video interactions clickable */
 }
 
+@keyframes hero-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* =========================
    Section headings & cards
    ========================= */
@@ -270,6 +284,22 @@ a {
   border: 2px solid var(--yellow);
   text-align: center;
   padding: 15px;
+}
+
+.trust-card,
+.service-summary-list,
+.about-card,
+.case-study-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.trust-card:hover,
+.service-summary-list:hover,
+.about-card:hover,
+.case-study-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+  border-color: rgba(218, 152, 22, 0.95);
 }
 
 .trust-card img,
@@ -335,6 +365,25 @@ a {
 
 .services-tech-list ul li img {
   margin-right: 4px;
+}
+
+/* Subtle icon movement to keep things feeling alive without being distracting */
+
+.services-tech-list ul li img,
+.why-choose-list-grid ul li img {
+  animation: float-soft 4s ease-in-out infinite;
+}
+
+@keyframes float-soft {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .ai-services-list ul {
@@ -519,46 +568,37 @@ a {
   flex-direction: column;
   gap: 16px;
   overflow: hidden;
-  height: 220px;
+  height: 180px;
 }
 
 .client-logo-track {
   display: flex;
   flex-direction: column;
-}
-
-.client-logo-track img {
-  height: 100px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
+  align-items: center;
+  gap: 18px;
 }
 
 .client-logo-column--up .client-logo-track {
-  animation: client-logo-scroll-up 20s linear infinite;
+  animation: none;
 }
 
 .client-logo-column--down .client-logo-track {
-  animation: client-logo-scroll-down 20s linear infinite;
+  animation: none;
 }
 
-@keyframes client-logo-scroll-up {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
+.client-logo-track img {
+  max-height: 80px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(0.15);
+  opacity: 0.9;
+  transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
 }
 
-@keyframes client-logo-scroll-down {
-  0% {
-    transform: translateY(-50%);
-  }
-  100% {
-    transform: translateY(0);
-  }
+.client-logo-track img:hover {
+  transform: translateY(-2px) scale(1.03);
+  filter: none;
+  opacity: 1;
 }
 
 .promo-media-wrapper {
@@ -638,6 +678,51 @@ a {
 .contact-form-card label a {
   color: var(--white);
   text-decoration: underline;
+}
+
+/* =========================
+   Buttons & interactive elements polish
+   ========================= */
+
+.btn_primary,
+.btn_secondary,
+.header-nav-primary .nav-link.header-btn,
+.header-nav-overlay .nav-link.header-btn {
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.btn_primary:hover,
+.btn_secondary:hover,
+.header-nav-primary .nav-link.header-btn:hover,
+.header-nav-overlay .nav-link.header-btn:hover {
+  box-shadow:
+    0 0 0 1px rgba(218, 152, 22, 0.45),
+    0 16px 40px rgba(0, 0, 0, 0.75);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   Scroll reveal utilities
+   ========================= */
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* =========================

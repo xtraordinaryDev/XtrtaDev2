@@ -204,6 +204,10 @@ a {
   display: block;
   margin-left: -4%;
   clip-path: inset(0 0 5% 0);
+  -webkit-clip-path: inset(0 0 5% 0);
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
 .home-hero-overlay {
@@ -254,6 +258,10 @@ a {
   object-fit: cover;
   display: block;
   clip-path: inset(0 0 5% 0);
+  -webkit-clip-path: inset(0 0 5% 0);
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
 .inner-page-hero-overlay {
@@ -634,11 +642,18 @@ a {
   height: auto;
   display: block;
   clip-path: inset(0 0 5% 0);
+  -webkit-clip-path: inset(0 0 5% 0);
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
 /* Crop bottom 5% of all videos */
 video {
   clip-path: inset(0 0 5% 0);
+  -webkit-clip-path: inset(0 0 5% 0);
+  -webkit-playsinline: true;
+  -webkit-touch-callout: none;
 }
 
 .content-align-right {
@@ -1007,6 +1022,14 @@ video {
   overflow-wrap: break-word;
 }
 
+.contact-form-card .form-group select {
+  min-height: auto;
+  resize: none;
+  cursor: pointer;
+  z-index: 1;
+  position: relative;
+}
+
 .contact-form-card .form-group input::placeholder,
 .contact-form-card .form-group textarea::placeholder {
   color: rgba(255, 255, 255, 0.4);
@@ -1081,6 +1104,22 @@ video {
 
 .select-with-custom-icon {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512' fill='white'><path d='M143 352.3l-135-135C2.3 211.3 0 206.3 0 201s2.3-10.3 7-14.7l14.3-14.3c9.4-9.4 24.6-9.4 33.9 0L160 277.5l104.7-104.7c9.4-9.4 24.6-9.4 33.9 0L313 187c9.4 9.4 9.4 24.6 0 33.9l-135 135c-9.4 9.4-24.6 9.4-34 0z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  cursor: pointer !important;
+  z-index: 10;
+  position: relative;
+}
+
+.contact-form-card .form-group select option {
+  background-color: var(--greyprimary);
+  color: var(--white);
+  padding: 10px;
 }
 
 [type=radio]:checked,

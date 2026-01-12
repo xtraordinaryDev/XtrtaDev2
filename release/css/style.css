@@ -208,6 +208,8 @@ a {
   pointer-events: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
+  -webkit-playsinline: true;
+  background-color: #000;
 }
 
 .home-hero-overlay {
@@ -371,10 +373,18 @@ a {
   font-size: 16px;
   font-weight: 600;
   font-family: var(--roboto);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.4;
 }
 
 .services-tech-list ul li img {
-  margin-right: 4px;
+  margin-right: 0;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 /* Subtle icon movement to keep things feeling alive without being distracting */
@@ -654,6 +664,18 @@ video {
   -webkit-clip-path: inset(0 0 5% 0);
   -webkit-playsinline: true;
   -webkit-touch-callout: none;
+}
+
+/* iOS / touch devices: allow tap-to-play and avoid clip-path issues on video rendering */
+@media (hover: none) and (pointer: coarse) {
+  .home-hero-video video,
+  .inner-page-hero video,
+  .promo-media-wrapper video,
+  video {
+    pointer-events: auto;
+    clip-path: none;
+    -webkit-clip-path: none;
+  }
 }
 
 .content-align-right {
@@ -1441,8 +1463,24 @@ video {
     height: 100%;
   }
 
+  .services-tech-list {
+    margin-top: 20px;
+  }
+
+  .services-tech-list ul {
+    gap: 12px;
+  }
+
   .services-tech-list ul li {
-    width: calc(100% - 15px);
+    width: calc(100% - 6px);
+    font-size: 15px;
+    padding: 8px 0;
+    line-height: 1.5;
+  }
+
+  .services-tech-list ul li img {
+    width: 20px;
+    height: 20px;
   }
 
   .ai-services-list ul li {
@@ -1497,8 +1535,19 @@ video {
     margin-top: 30px;
   }
 
+  .services-tech-list ul {
+    gap: 12px;
+  }
+
   .services-tech-list ul li {
-    width: calc(50% - 15px);
+    width: calc(50% - 6px);
+    font-size: 15px;
+    padding: 6px 0;
+  }
+
+  .services-tech-list ul li img {
+    width: 22px;
+    height: 22px;
   }
 
   .workflow-steps-list ul {
@@ -1664,8 +1713,19 @@ video {
     font-size: 14px;
   }
 
+  .services-tech-list ul {
+    gap: 10px;
+  }
+
   .services-tech-list ul li {
-    width: calc(100% - 15px);
+    width: calc(100% - 5px);
+    font-size: 14px;
+    padding: 8px 0;
+  }
+
+  .services-tech-list ul li img {
+    width: 18px;
+    height: 18px;
   }
 
   .why-choose-list-grid ul li {

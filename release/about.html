@@ -127,9 +127,13 @@
          </div>
          <div class="col-lg-6 col-md-6">
            <div class="promo-media-wrapper reveal-on-scroll">
-            <video autoplay muted loop playsinline>
-              <source src="images/Tech_Services_Visual_Explainer_Animation.mp4" type="video/mp4">
-              Your browser does not support the video tag.
+            <!-- 
+               UPDATED VIDEO TAG:
+               1. Added ID "promoVideo" so the script can find it.
+               2. Removed <source> tags to let JavaScript handle the file selection.
+               3. Attributes set for iOS (muted, playsinline, etc).
+            -->
+            <video id="promoVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
             </video>
            </div>
          </div>
@@ -216,5 +220,67 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- iOS Video Fix Script for About Page Video -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Target the specific video on this page
+        var video = document.getElementById('promoVideo');
+        var videoBaseName = 'images/Tech_Services_Visual_Explainer_Animation';
+        
+        // Function to detect iOS devices
+        function isIOS() {
+          return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                 (/Macintosh/.test(navigator.userAgent) && 'ontouchend' in document);
+        }
+
+        // DECIDE WHICH VIDEO TO LOAD
+        if (isIOS()) {
+          // 1. IOS USERS: Load HLS (.m3u8) with the same name
+          console.log("iOS Device Detected. Loading HLS video.");
+          video.src = videoBaseName + '.m3u8';
+        } else {
+          // 2. ANDROID / CHROME / DESKTOP: Load MP4
+          console.log("Non-iOS Device Detected. Loading MP4 video.");
+          video.src = videoBaseName + '.mp4';
+        }
+
+        // ATTEMPT AUTOPLAY
+        var attemptCount = 0;
+        var maxAttempts = 5;
+
+        function attemptPlay() {
+          video.muted = true; // Ensure muted is set
+          var playPromise = video.play();
+          
+          if (playPromise !== undefined) {
+            playPromise.then(_ => {
+              console.log("About page video autoplay started.");
+            })
+            .catch(error => {
+              console.log("Autoplay blocked, retrying... (" + attemptCount + ")");
+              if (attemptCount < maxAttempts) {
+                attemptCount++;
+                setTimeout(attemptPlay, 500);
+              }
+            });
+          }
+        }
+
+        // Start playing
+        attemptPlay();
+      });
+    </script>
+
+    <script>
+      window.intercomSettings = {
+        api_base: "https://api-iam.intercom.io",
+        app_id: "t0vayrzl",
+      };
+    </script>
+    <script>
+      // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/t0vayrzl'
+      (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/t0vayrzl';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+    </script>
   </body>
 </html>

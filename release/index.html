@@ -54,9 +54,20 @@
       </div>
 
       <div class="home-hero-video">
-        <video autoplay muted loop playsinline>
-          <source src="images/xtraherosection.mp4" type="video/mp4">
-          Your browser does not support the video tag.
+        <!-- 
+           NOTE: 
+           We have removed the <source> tags from here.
+           The video src will be set by JavaScript below based on the device.
+        -->
+        <video 
+           id="heroVideo"
+           autoplay 
+           muted 
+           loop 
+           playsinline 
+           webkit-playsinline 
+           preload="auto"
+           poster="images/video-poster.jpg">
         </video>
 
         <!-- Hero headline over video -->
@@ -324,7 +335,7 @@
             <div class="footer-bottom-bar">
               <div class="row">
                 <div class="col-lg-6 col-md-5">
-                  <p>© 2023 X-traordinary all rights reserved.</p>
+                  <p>© 2023 X-traordinary all rights reserved.</p>
                 </div>
                 <div class="col-lg-6 col-md-7">
                   <ul>
@@ -343,5 +354,66 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="//code.tidio.co/gtywgm61khh2psb5oshiyfr7vlmnyl5u.js" async></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var video = document.getElementById('heroVideo');
+        
+        // Function to detect iOS devices (iPhone, iPad, iPod)
+        function isIOS() {
+          return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                 (/Macintosh/.test(navigator.userAgent) && 'ontouchend' in document);
+        }
+
+        // DECIDE WHICH VIDEO TO LOAD
+        if (isIOS()) {
+          // 1. IOS USERS: Load HLS (.m3u8)
+          console.log("iOS Device Detected. Loading HLS video.");
+          video.src = 'images/output.m3u8';
+        } else {
+          // 2. ANDROID / CHROME / DESKTOP: Load MP4
+          console.log("Non-iOS Device Detected. Loading MP4 video.");
+          video.src = 'images/xtraherosection.mp4';
+        }
+
+        // ATTEMPT AUTOPLAY
+        // We use a small retry loop just in case the browser is slow to load the source
+        var attemptCount = 0;
+        var maxAttempts = 5;
+
+        function attemptPlay() {
+          video.muted = true; // Ensure muted
+          var playPromise = video.play();
+          
+          if (playPromise !== undefined) {
+            playPromise.then(_ => {
+              console.log("Video autoplay started.");
+            })
+            .catch(error => {
+              console.log("Autoplay blocked, retrying... (" + attemptCount + ")");
+              if (attemptCount < maxAttempts) {
+                attemptCount++;
+                setTimeout(attemptPlay, 500);
+              }
+            });
+          }
+        }
+
+        // Start playing
+        attemptPlay();
+      });
+    </script>
+
+    <script>
+      window.intercomSettings = {
+        api_base: "https://api-iam.intercom.io",
+        app_id: "t0vayrzl",
+      };
+    </script>
+    <script>
+      // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/t0vayrzl'
+      (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/t0vayrzl';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+    </script>
   </body>
 </html>

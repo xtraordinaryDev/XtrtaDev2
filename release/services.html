@@ -54,7 +54,13 @@
       </div><!-- navigation-area -->
 
       <div class="inner-page-hero">
-        <img src="images/services/header.jpg">
+        <!-- 
+           UPDATED HEADER HERO:
+           Replaced <img> with <video>.
+           ID: "heroVideo".
+           Path: images/services/header
+        -->
+        <video id="heroVideo" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="images/services/header.jpg"></video>
       </div>
     </header>
 
@@ -106,10 +112,12 @@
          </div><!-- col-lg-6 col-md-6 -->
         <div class="col-lg-6 col-md-6">
           <div class="promo-media-wrapper reveal-on-scroll">
-            <video autoplay muted loop playsinline>
-              <source src="images/Tech_Services_Visual_Explainer_Animation.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+            <!-- 
+               UPDATED BODY VIDEO:
+               ID: "promoVideo".
+               Path: images/Tech_Services_Visual_Explainer_Animation
+            -->
+            <video id="promoVideo" autoplay muted loop playsinline webkit-playsinline preload="auto"></video>
           </div>
         </div><!-- col-lg-6 col-md-6 -->
        </div><!-- row -->
@@ -406,5 +414,78 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- iOS Video Fix Script for Services Page (Handles 2 Videos) -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        
+        // Reusable function to setup a specific video
+        function setupVideo(videoId, basePath) {
+          var video = document.getElementById(videoId);
+          if (!video) return;
+
+          function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                   (/Macintosh/.test(navigator.userAgent) && 'ontouchend' in document);
+          }
+
+          // DECIDE WHICH VIDEO TO LOAD
+          if (isIOS()) {
+            // 1. IOS USERS: Load HLS (.m3u8)
+            console.log("iOS Device Detected. Loading: " + basePath + ".m3u8");
+            video.src = basePath + '.m3u8';
+          } else {
+            // 2. ANDROID / CHROME / DESKTOP: Load MP4
+            console.log("Non-iOS Device Detected. Loading: " + basePath + ".mp4");
+            video.src = basePath + '.mp4';
+          }
+
+          // ATTEMPT AUTOPLAY
+          var attemptCount = 0;
+          var maxAttempts = 5;
+
+          function attemptPlay() {
+            video.muted = true; // Ensure muted is set
+            var playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+              playPromise.then(_ => {
+                console.log("Video autoplay started: " + videoId);
+              })
+              .catch(error => {
+                console.log("Autoplay blocked for " + videoId + ", retrying... (" + attemptCount + ")");
+                if (attemptCount < maxAttempts) {
+                  attemptCount++;
+                  setTimeout(attemptPlay, 500);
+                }
+              });
+            }
+          }
+
+          // Start playing
+          attemptPlay();
+        }
+
+        // Initialize Header Hero Video
+        // Files: images/services/header.mp4 / .m3u8
+        setupVideo('heroVideo', 'images/services/header');
+
+        // Initialize Body "Who We Can Help" Video
+        // Files: images/Tech_Services_Visual_Explainer_Animation.mp4 / .m3u8
+        setupVideo('promoVideo', 'images/Tech_Services_Visual_Explainer_Animation');
+
+      });
+    </script>
+
+    <script>
+      window.intercomSettings = {
+        api_base: "https://api-iam.intercom.io",
+        app_id: "t0vayrzl",
+      };
+    </script>
+    <script>
+      // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/t0vayrzl'
+      (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/t0vayrzl';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+    </script>
   </body>
 </html>
